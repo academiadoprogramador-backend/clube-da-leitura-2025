@@ -1,11 +1,18 @@
-﻿namespace ClubeDaLeitura.ConsoleApp.Compartilhado;
+﻿using ClubeDaLeitura.ConsoleApp.ModuloAmigo;
+
+namespace ClubeDaLeitura.ConsoleApp.Compartilhado;
 
 public class TelaPrincipal
 {
     private char opcaoEscolhida;
 
+    private RepositorioAmigo repositorioAmigo;
+    private TelaAmigo telaAmigo;
+
     public TelaPrincipal()
     {
+        repositorioAmigo = new RepositorioAmigo();
+        telaAmigo = new TelaAmigo(repositorioAmigo);
     }
 
     public void ApresentarMenuPrincipal()
@@ -33,7 +40,7 @@ public class TelaPrincipal
     public TelaBase ObterTela()
     {
         if (opcaoEscolhida == '1')
-            return null;
+            return telaAmigo;
 
         else if (opcaoEscolhida == '2')
             return null;

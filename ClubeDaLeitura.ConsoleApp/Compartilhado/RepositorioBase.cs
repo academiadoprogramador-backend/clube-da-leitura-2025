@@ -31,7 +31,7 @@ public abstract class RepositorioBase
             if (registros[i] == null)
                 continue;
 
-            else if (registros[i].id == idSelecionado)
+            else if (registros[i].Id == idSelecionado)
             {
                 registros[i] = null;
 
@@ -56,7 +56,7 @@ public abstract class RepositorioBase
             if (registro == null)
                 continue;
 
-            if (registro.id == idSelecionado)
+            if (registro.Id == idSelecionado)
                 return registro;
         }
 
