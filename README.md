@@ -94,7 +94,7 @@ caixa)
 
 #### Clone o Repositório
 ```
-git clone https://github.com/academiadoprogramador-backend/gestao-de-equipamentos-2025.git
+git clone https://github.com/academiadoprogramador-backend/clube-da-leitura-2025.git
 ```
 
 #### Navegue até a pasta raiz da solução
