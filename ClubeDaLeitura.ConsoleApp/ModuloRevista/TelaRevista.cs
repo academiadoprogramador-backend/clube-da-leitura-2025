@@ -70,6 +70,8 @@ public class TelaRevista : TelaBase
 
     public void VisualizarCaixas()
     {
+        Console.WriteLine();
+
         Console.WriteLine("Visualização de Caixas");
 
         Console.WriteLine();
