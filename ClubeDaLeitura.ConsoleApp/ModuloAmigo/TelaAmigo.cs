@@ -67,6 +67,77 @@ public class TelaAmigo : TelaBase
         Console.ReadLine();
     }
 
+    public override void EditarRegistro()
+    {
+        ExibirCabecalho();
+
+        Console.WriteLine($"Edição de {nomeEntidade}");
+
+        Console.WriteLine();
+
+        VisualizarRegistros(false);
+
+        Console.Write("Digite o id do registro que deseja selecionar: ");
+        int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine();
+
+        Amigo registroAtualizado = (Amigo)ObterDados();
+
+        string erros = registroAtualizado.Validar();
+
+        if (erros.Length > 0)
+        {
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(erros);
+            Console.ResetColor();
+
+            Console.Write("\nDigite ENTER para continuar...");
+            Console.ReadLine();
+
+            EditarRegistro();
+
+            return;
+        }
+
+        EntidadeBase[] registros = repositorio.SelecionarRegistros();
+
+        for (int i = 0; i < registros.Length; i++)
+        {
+            Amigo amigoRegistrado = (Amigo)registros[i];
+
+            if (amigoRegistrado == null)
+                continue;
+
+            if (
+                amigoRegistrado.Id != idSelecionado &&
+                (amigoRegistrado.Nome == registroAtualizado.Nome ||
+                amigoRegistrado.Telefone == registroAtualizado.Telefone)
+            )
+            {
+                Console.WriteLine();
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Um amigo com este nome ou telefone já foi cadastrado!");
+                Console.ResetColor();
+
+                Console.Write("\nDigite ENTER para continuar...");
+                Console.ReadLine();
+
+                EditarRegistro();
+
+                return;
+            }
+        }
+
+        repositorio.EditarRegistro(idSelecionado, registroAtualizado);
+
+        Console.WriteLine($"\n{nomeEntidade} editado com sucesso!");
+        Console.ReadLine();
+    }
+
     public override void VisualizarRegistros(bool exibirCabecalho)
     {
         if (exibirCabecalho == true)
