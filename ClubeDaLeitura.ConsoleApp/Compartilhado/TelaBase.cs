@@ -41,6 +41,9 @@ public abstract class TelaBase
 
         string erros = novoRegistro.Validar();
 
+        if (erros.Length == 0)
+            VerificarRestricoesNoCadastro(novoRegistro, ref erros);
+            
         if (erros.Length > 0)
         {
             Console.WriteLine();
@@ -55,12 +58,20 @@ public abstract class TelaBase
             CadastrarRegistro();
 
             return;
-        }
+        }                
 
         repositorio.CadastrarRegistro(novoRegistro);
 
         Console.WriteLine($"\n{nomeEntidade} cadastrado com sucesso!");
         Console.ReadLine();
+    }
+
+    protected virtual void VerificarRestricoesNoCadastro(EntidadeBase novoRegistro, ref string erros)
+    {        
+    }
+
+    protected virtual void VerificarRestricoesNaEdicao(EntidadeBase novoRegistro, ref string erros)
+    {
     }
 
     public virtual void EditarRegistro()
@@ -79,6 +90,27 @@ public abstract class TelaBase
         Console.WriteLine();
 
         EntidadeBase registroAtualizado = ObterDados();
+
+        string erros = registroAtualizado.Validar();
+
+        if (erros.Length == 0)
+            VerificarRestricoesNaEdicao(registroAtualizado, ref erros);
+
+        if (erros.Length > 0)
+        {
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(erros);
+            Console.ResetColor();
+
+            Console.Write("\nDigite ENTER para continuar...");
+            Console.ReadLine();
+
+            CadastrarRegistro();
+
+            return;
+        }
 
         repositorio.EditarRegistro(idSelecionado, registroAtualizado);
 

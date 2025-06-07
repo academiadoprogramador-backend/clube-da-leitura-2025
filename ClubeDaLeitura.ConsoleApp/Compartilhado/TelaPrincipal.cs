@@ -20,7 +20,10 @@ public class TelaPrincipal
     public TelaPrincipal()
     {
         repositorioAmigo = new RepositorioAmigo();
+        repositorioAmigo.CadastrarRegistro(new Amigo("Tiago", "Sonia", "49 9999-1234"));
+
         telaAmigo = new TelaAmigo(repositorioAmigo);
+
 
         repositorioCaixa = new RepositorioCaixa();
         telaCaixa = new TelaCaixa(repositorioCaixa);
