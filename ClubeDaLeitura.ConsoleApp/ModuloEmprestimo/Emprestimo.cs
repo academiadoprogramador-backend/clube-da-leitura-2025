@@ -17,7 +17,25 @@ public class Emprestimo : EntidadeBase
         }
     }
     public string Status { get; set; }
-    public Multa Multa { get; set; }
+
+    public Multa Multa
+    {
+        get
+        {
+            if (DateTime.Now <= DataDevolucao)
+                return null;
+
+            TimeSpan diferencaDatas = DateTime.Now.Subtract(DataDevolucao);
+
+            decimal valorMulta = 2.00m * diferencaDatas.Days;
+
+            Multa multa = new Multa(valorMulta);
+
+            return multa;
+        }
+    }
+
+    public bool MultaPaga = false;
 
     public Emprestimo(Amigo amigo, Revista revista)
     {
@@ -25,7 +43,6 @@ public class Emprestimo : EntidadeBase
         Revista = revista;
         DataEmprestimo = DateTime.Now;
         Status = "Aberto";
-        Multa = null;
     }
 
     public override void AtualizarRegistro(EntidadeBase registroAtualizado)

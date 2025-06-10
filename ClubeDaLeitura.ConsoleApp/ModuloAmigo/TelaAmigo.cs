@@ -184,7 +184,7 @@ public class TelaAmigo : TelaBase
 
                 if (a == e.Amigo && e.Multa != null)
                 {
-                    if (!e.Multa.EstaPaga)
+                    if (!e.MultaPaga)
                         amigoTemMultaAtiva = true;
                 }
             }
