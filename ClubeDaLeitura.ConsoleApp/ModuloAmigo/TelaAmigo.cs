@@ -1,10 +1,16 @@
 ﻿using ClubeDaLeitura.ConsoleApp.Compartilhado;
+using ClubeDaLeitura.ConsoleApp.ModuloEmprestimo;
 
 namespace ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 
 public class TelaAmigo : TelaBase
 {
-    public TelaAmigo(RepositorioAmigo repositorio) : base("Amigo", repositorio) { }
+    private RepositorioEmprestimo repositorioEmprestimo;
+
+    public TelaAmigo(RepositorioAmigo repositorio, RepositorioEmprestimo repositorioEmprestimo) : base("Amigo", repositorio)
+    {
+        this.repositorioEmprestimo = repositorioEmprestimo;
+    }
 
     public override void CadastrarRegistro()
     {
@@ -152,11 +158,13 @@ public class TelaAmigo : TelaBase
         Console.WriteLine();
 
         Console.WriteLine(
-            "{0, -10} | {1, -30} | {2, -30} | {3, -20}",
-            "Id", "Nome", "Responsável", "Telefone"
+            "{0, -10} | {1, -30} | {2, -30} | {3, -20} | {4, -15}",
+            "Id", "Nome", "Responsável", "Telefone", "Multa Ativa"
         );
 
         EntidadeBase[] amigos = repositorio.SelecionarRegistros();
+
+        EntidadeBase[] emprestimos = repositorioEmprestimo.SelecionarRegistros();
 
         for (int i = 0; i < amigos.Length; i++)
         {
@@ -165,9 +173,27 @@ public class TelaAmigo : TelaBase
             if (a == null)
                 continue;
 
+            bool amigoTemMultaAtiva = false;
+
+            for (int j = 0; j < emprestimos.Length; j++)
+            {
+                Emprestimo e = (Emprestimo)emprestimos[j];
+
+                if (e == null)
+                    continue;
+
+                if (a == e.Amigo && e.Multa != null)
+                {
+                    if (!e.Multa.EstaPaga)
+                        amigoTemMultaAtiva = true;
+                }
+            }
+
+            string stringMultaAtiva = amigoTemMultaAtiva ? "Sim" : "Não";
+
             Console.WriteLine(
-              "{0, -10} | {1, -30} | {2, -30} | {3, -20}",
-                a.Id, a.Nome, a.NomeResponsavel, a.Telefone
+              "{0, -10} | {1, -30} | {2, -30} | {3, -20} | {4, -15}",
+                a.Id, a.Nome, a.NomeResponsavel, a.Telefone, stringMultaAtiva
             );
         }
 

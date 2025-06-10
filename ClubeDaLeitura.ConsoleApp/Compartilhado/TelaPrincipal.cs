@@ -24,25 +24,28 @@ public class TelaPrincipal
     public TelaPrincipal()
     {
         repositorioAmigo = new RepositorioAmigo();
-        telaAmigo = new TelaAmigo(repositorioAmigo);
-
         repositorioCaixa = new RepositorioCaixa();
-        telaCaixa = new TelaCaixa(repositorioCaixa);
-
         repositorioRevista = new RepositorioRevista();
-        telaRevista = new TelaRevista(repositorioRevista, repositorioCaixa);
-
         repositorioEmprestimo = new RepositorioEmprestimo();
+
+        telaAmigo = new TelaAmigo(repositorioAmigo, repositorioEmprestimo);
+        telaCaixa = new TelaCaixa(repositorioCaixa);
+        telaRevista = new TelaRevista(repositorioRevista, repositorioCaixa);
         telaEmprestimo = new TelaEmprestimo(repositorioEmprestimo, repositorioAmigo, repositorioRevista);
 
         Amigo amigo = new Amigo("Júnior", "Amanda", "49 99999-3333");
         repositorioAmigo.CadastrarRegistro(amigo);
 
-        Caixa caixa = new Caixa("Ação", "Vermelha");
+        Caixa caixa = new Caixa("Ação", "Vermelha", 1);
         repositorioCaixa.CadastrarRegistro(caixa);
 
         Revista revista = new Revista("Superman", 150, 1995, caixa);
         repositorioRevista.CadastrarRegistro(revista);
+
+        Emprestimo emprestimo = new Emprestimo(amigo, revista);
+        emprestimo.DataEmprestimo = DateTime.Now.AddDays(-2);
+
+        repositorioEmprestimo.CadastrarRegistro(emprestimo);
     }
 
     public void ApresentarMenuPrincipal()

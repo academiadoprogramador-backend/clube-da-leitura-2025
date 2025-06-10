@@ -139,6 +139,17 @@ public class TelaEmprestimo : TelaBase
         emprestimoSelecionado.Status = "Concluído";
         emprestimoSelecionado.Revista.Status = "Disponível";
 
+        if (DateTime.Now > emprestimoSelecionado.DataDevolucao)
+        {
+            TimeSpan diferencaDatas = DateTime.Now.Subtract(emprestimoSelecionado.DataDevolucao);
+
+            decimal valorMulta = 2.00m * diferencaDatas.Days;
+
+            Multa multa = new Multa(valorMulta);
+
+            emprestimoSelecionado.Multa = multa;
+        }
+
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine($"\n{nomeEntidade} concluído com sucesso!");
         Console.ResetColor();
