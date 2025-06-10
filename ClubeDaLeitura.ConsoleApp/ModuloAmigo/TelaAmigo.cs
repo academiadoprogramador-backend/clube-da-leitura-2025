@@ -4,9 +4,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 
 public class TelaAmigo : TelaBase
 {
-    public TelaAmigo(RepositorioAmigo repositorio) : base("Amigo", repositorio)
-    {
-    }
+    public TelaAmigo(RepositorioAmigo repositorio) : base("Amigo", repositorio) { }
 
     public override void CadastrarRegistro()
     {
@@ -63,7 +61,10 @@ public class TelaAmigo : TelaBase
 
         repositorio.CadastrarRegistro(novoRegistro);
 
+        Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine($"\n{nomeEntidade} cadastrado com sucesso!");
+        Console.ResetColor();
+
         Console.ReadLine();
     }
 
@@ -134,7 +135,10 @@ public class TelaAmigo : TelaBase
 
         repositorio.EditarRegistro(idSelecionado, registroAtualizado);
 
+        Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine($"\n{nomeEntidade} editado com sucesso!");
+        Console.ResetColor();
+
         Console.ReadLine();
     }
 
@@ -167,19 +171,23 @@ public class TelaAmigo : TelaBase
             );
         }
 
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.Write($"\nDigite ENTER para continuar...");
+        Console.ResetColor();
+
         Console.ReadLine();
     }
 
     protected override EntidadeBase ObterDados()
     {
         Console.Write("Digite o nome do amigo: ");
-        string nome = Console.ReadLine();
+        string nome = Console.ReadLine()!;
 
         Console.Write("Digite o nome do responsável pelo amigo: ");
-        string nomeResponsavel = Console.ReadLine();
+        string nomeResponsavel = Console.ReadLine()!;
 
         Console.Write("Digite o telefone do amigo ou responsável: ");
-        string telefone = Console.ReadLine();
+        string telefone = Console.ReadLine()!;
 
         Amigo amigo = new Amigo(nome, nomeResponsavel, telefone);
 

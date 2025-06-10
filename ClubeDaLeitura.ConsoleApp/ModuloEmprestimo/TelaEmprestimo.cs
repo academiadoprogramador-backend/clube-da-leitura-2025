@@ -133,17 +133,17 @@ public class TelaEmprestimo : TelaBase
 
         string resposta = Console.ReadLine()!;
 
-        if (resposta.ToUpper() == "S")
-        {
-            emprestimoSelecionado.Status = "Concluído";
-            emprestimoSelecionado.Revista.Status = "Disponível";
+        if (resposta.ToUpper() != "S")
+            return;
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"\n{nomeEntidade} concluído com sucesso!");
-            Console.ResetColor();
+        emprestimoSelecionado.Status = "Concluído";
+        emprestimoSelecionado.Revista.Status = "Disponível";
 
-            Console.ReadLine();
-        }
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine($"\n{nomeEntidade} concluído com sucesso!");
+        Console.ResetColor();
+
+        Console.ReadLine();
     }
 
     public override void VisualizarRegistros(bool exibirCabecalho)
@@ -179,6 +179,10 @@ public class TelaEmprestimo : TelaBase
 
             Console.ResetColor();
         }
+
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.Write($"\nDigite ENTER para continuar...");
+        Console.ResetColor();
 
         Console.ReadLine();
     }

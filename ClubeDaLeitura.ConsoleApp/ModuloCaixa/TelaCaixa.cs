@@ -4,9 +4,7 @@ namespace ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 
 public class TelaCaixa : TelaBase
 {
-    public TelaCaixa(RepositorioCaixa repositorio) : base("Caixa", repositorio)
-    {
-    }
+    public TelaCaixa(RepositorioCaixa repositorio) : base("Caixa", repositorio) { }
 
     public override void VisualizarRegistros(bool exibirCabecalho)
     {
@@ -37,16 +35,20 @@ public class TelaCaixa : TelaBase
             );
         }
 
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.Write($"\nDigite ENTER para continuar...");
+        Console.ResetColor();
+
         Console.ReadLine();
     }
 
     protected override EntidadeBase ObterDados()
     {
         Console.Write("Digite a etiqueta da caixa: ");
-        string etiqueta = Console.ReadLine();
+        string etiqueta = Console.ReadLine()!;
 
         Console.Write("Digite a cor da caixa: ");
-        string cor = Console.ReadLine();
+        string cor = Console.ReadLine()!;
 
         Console.Write("Dias de Empréstimo (opcional): ");
         bool conseguiuConverter = int.TryParse(Console.ReadLine(), out int diasEmprestimo);

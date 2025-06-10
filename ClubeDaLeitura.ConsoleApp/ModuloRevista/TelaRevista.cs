@@ -42,13 +42,17 @@ public class TelaRevista : TelaBase
             );
         }
 
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.Write($"\nDigite ENTER para continuar...");
+        Console.ResetColor();
+
         Console.ReadLine();
     }
 
     protected override EntidadeBase ObterDados()
     {
         Console.Write("Digite o título da revista: ");
-        string titulo = Console.ReadLine();
+        string titulo = Console.ReadLine()!;
 
         Console.Write("Digite o número da edição da revista: ");
         int numeroEdicao = Convert.ToInt32(Console.ReadLine());
@@ -68,7 +72,7 @@ public class TelaRevista : TelaBase
         return revista;
     }
 
-    public void VisualizarCaixas()
+    private void VisualizarCaixas()
     {
         Console.WriteLine();
 
