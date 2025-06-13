@@ -1,6 +1,7 @@
 ﻿using ClubeDaLeitura.ConsoleApp.ModuloAmigo;
 using ClubeDaLeitura.ConsoleApp.ModuloCaixa;
 using ClubeDaLeitura.ConsoleApp.ModuloEmprestimo;
+using ClubeDaLeitura.ConsoleApp.ModuloReserva;
 using ClubeDaLeitura.ConsoleApp.ModuloRevista;
 
 namespace ClubeDaLeitura.ConsoleApp.Compartilhado;
@@ -21,17 +22,22 @@ public class TelaPrincipal
     private RepositorioEmprestimo repositorioEmprestimo;
     private TelaEmprestimo telaEmprestimo;
 
+    private RepositorioReserva repositorioReserva;
+    private TelaReserva telaReserva;
+
     public TelaPrincipal()
     {
         repositorioAmigo = new RepositorioAmigo();
         repositorioCaixa = new RepositorioCaixa();
         repositorioRevista = new RepositorioRevista();
         repositorioEmprestimo = new RepositorioEmprestimo();
+        repositorioReserva = new RepositorioReserva();
 
         telaAmigo = new TelaAmigo(repositorioAmigo, repositorioEmprestimo);
         telaCaixa = new TelaCaixa(repositorioCaixa);
         telaRevista = new TelaRevista(repositorioRevista, repositorioCaixa);
         telaEmprestimo = new TelaEmprestimo(repositorioEmprestimo, repositorioAmigo, repositorioRevista);
+        telaReserva = new TelaReserva(repositorioReserva, repositorioAmigo, repositorioRevista);
 
         Amigo amigo = new Amigo("Júnior", "Amanda", "49 99999-3333");
         repositorioAmigo.CadastrarRegistro(amigo);
@@ -42,10 +48,9 @@ public class TelaPrincipal
         Revista revista = new Revista("Superman", 150, 1995, caixa);
         repositorioRevista.CadastrarRegistro(revista);
 
-        Emprestimo emprestimo = new Emprestimo(amigo, revista);
-        emprestimo.DataEmprestimo = DateTime.Now.AddDays(-2);
-
-        repositorioEmprestimo.CadastrarRegistro(emprestimo);
+        Reserva reserva = new Reserva(amigo, revista);
+        reserva.Iniciar();
+        repositorioReserva.CadastrarRegistro(reserva);
     }
 
     public void ApresentarMenuPrincipal()
@@ -62,6 +67,7 @@ public class TelaPrincipal
         Console.WriteLine("2 - Controle de Caixas");
         Console.WriteLine("3 - Controle de Revistas");
         Console.WriteLine("4 - Controle de Empréstimos");
+        Console.WriteLine("5 - Controle de Reservas");
         Console.WriteLine("S - Sair");
 
         Console.WriteLine();
@@ -83,6 +89,9 @@ public class TelaPrincipal
 
         else if (opcaoEscolhida == '4')
             return telaEmprestimo;
+
+        else if (opcaoEscolhida == '5')
+            return telaReserva;
 
         return null;
     }
